@@ -6,23 +6,24 @@ controllerLibrary = NET.addAssembly([pwd '\SharpDX.XInput.dll']);
 myController = SharpDX.XInput.Controller(SharpDX.XInput.UserIndex.One);
 
 VibrationLevel = SharpDX.XInput.Vibration;
-i = 1;
 
-% Infinite do-loop 
-while true
+Left = zeros(100,1);
+Right = zeros(100,1);
+Time = zeros(100,1);
+
+for i = 1:1000
     State = myController.GetState();
     VibrationLevel.LeftMotorSpeed = State.Gamepad.LeftTrigger;
     VibrationLevel.RightMotorSpeed = State.Gamepad.RightTrigger;
-    i = i + 1;
     Left(i) = double(State.Gamepad.LeftTrigger);
     Right(i) = double(State.Gamepad.RightTrigger);
     Time(i) = i;
     myController.SetVibration(VibrationLevel); % If your controller supports vibration
     clf
-    plot(Time, Left, 'r');
+    scatter(Time, Left, 'r');
     hold on
-    plot(Time, Right, 'b');
-    pause(.1);
+    scatter(Time, Right, 'b');
+    pause(.001);
 end    
 
 
