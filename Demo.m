@@ -13,8 +13,11 @@ Time = zeros(100,1);
 
 for i = 1:1000
     State = myController.GetState();
-    VibrationLevel.LeftMotorSpeed = State.Gamepad.LeftTrigger;
-    VibrationLevel.RightMotorSpeed = State.Gamepad.RightTrigger;
+    ButtonStates = ButtonStateParser(State.Gamepad.Buttons); % Put this into a structure
+    disp(State.Gamepad);
+    disp(ButtonStates);
+    VibrationLevel.LeftMotorSpeed = double(State.Gamepad.LeftTrigger) * 255;
+    VibrationLevel.RightMotorSpeed = double(State.Gamepad.RightTrigger) * 255;
     Left(i) = double(State.Gamepad.LeftTrigger);
     Right(i) = double(State.Gamepad.RightTrigger);
     Time(i) = i;
@@ -26,6 +29,7 @@ for i = 1:1000
     pause(.001);
 end    
 
-
-
+VibrationLevel.LeftMotorSpeed = 0;
+VibrationLevel.RightMotorSpeed = 0;
+myController.SetVibration(VibrationLevel); % If your controller supports vibration
 
