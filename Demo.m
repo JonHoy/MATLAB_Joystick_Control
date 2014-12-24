@@ -23,9 +23,9 @@ for i = 1:1000
     Time(i) = i;
     myController.SetVibration(VibrationLevel); % If your controller supports vibration
     clf
-    scatter(Time, Left, 'r');
+    plot(Time, Left, 'r');
     hold on
-    scatter(Time, Right, 'b');
+    plot(Time, Right, 'b');
     pause(.001);
 end    
 
